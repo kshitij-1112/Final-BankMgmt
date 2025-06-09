@@ -42,26 +42,26 @@
         </div> 
     </div> 
 
-    <!-- Table - Compact design exactly like repayment tables -->
+    <!-- Table Container -->
     <div class="table-container"> 
         <div class="table-wrapper"> 
-            <table class="table table-bordered"> 
+            <table class="table"> 
                 <thead> 
                     <tr> 
                         @if (role == "Admin") 
                         { 
-                            <th scope="col" class="col-customer-id"><i class="fas fa-hashtag"></i><br>Customer ID</th> 
-                            <th scope="col" class="col-name"><i class="fas fa-user"></i><br>Name</th> 
+                            <th><i class="fas fa-hashtag"></i><br>CUSTOMER ID</th> 
+                            <th><i class="fas fa-user"></i><br>NAME</th> 
                         } 
-                        <th scope="col" class="col-product-type"><i class="fas fa-tag"></i><br>Product Type</th> 
-                        <th scope="col" class="col-product-name"><i class="fas fa-box"></i><br>Product Name</th> 
-                        <th scope="col" class="col-interest-rate"><i class="fas fa-percentage"></i><br>Interest Rate</th> 
-                        <th scope="col" class="col-tenure"><i class="fas fa-hourglass-half"></i><br>Tenure</th> 
-                        <th scope="col" class="col-loan-amount"><i class="fas fa-rupee-sign"></i><br>Loan Amount</th> 
-                        <th scope="col" class="col-status"><i class="fas fa-info-circle"></i><br>Status</th> 
+                        <th><i class="fas fa-tag"></i><br>PRODUCT TYPE</th> 
+                        <th><i class="fas fa-box"></i><br>PRODUCT NAME</th> 
+                        <th><i class="fas fa-percentage"></i><br>INTEREST RATE</th> 
+                        <th><i class="fas fa-hourglass-half"></i><br>TENURE</th> 
+                        <th><i class="fas fa-rupee-sign"></i><br>LOAN AMOUNT</th> 
+                        <th><i class="fas fa-info-circle"></i><br>STATUS</th> 
                         @if (role == "Admin") 
                         { 
-                            <th scope="col" class="col-actions"><i class="fas fa-cogs"></i><br>Actions</th> 
+                            <th><i class="fas fa-cogs"></i><br>ACTIONS</th> 
                         } 
                     </tr> 
                 </thead> 
@@ -71,15 +71,15 @@
                         <tr class="disbursement-row" data-application-id="@app.ApplicationId"> 
                             @if (role == "Admin") 
                             { 
-                                <td class="text-center"><strong>@app.CustomerId</strong></td> 
-                                <td class="text-center"><strong>@app.Name</strong></td> 
+                                <td>@app.CustomerId</td> 
+                                <td>@app.Name</td> 
                             } 
-                            <td class="text-center"><strong>@app.ProductType</strong></td> 
-                            <td class="text-center"><strong>@app.ProductName</strong></td> 
-                            <td class="text-center"><span class="rate">@app.InterestRate%</span></td> 
-                            <td class="text-center"><span class="tenure">@app.LoanTenure years</span></td> 
-                            <td class="text-center"><span class="amount">₹@app.LoanAmount?.ToString("N0")</span></td> 
-                            <td class="text-center"> 
+                            <td>@app.ProductType</td> 
+                            <td>@app.ProductName</td> 
+                            <td><span class="rate">@app.InterestRate%</span></td> 
+                            <td><span class="tenure">@app.LoanTenure years</span></td> 
+                            <td><span class="amount">₹@app.LoanAmount?.ToString("N0")</span></td> 
+                            <td> 
                                 @{ 
                                     string statusClass = ""; 
                                     string statusIcon = ""; 
@@ -106,17 +106,15 @@
                             </td> 
                             @if (role == "Admin") 
                             { 
-                                <td class="text-center"> 
-                                    <div class="action-buttons">
-                                        <form method="post" asp-action="Disburse" asp-controller="Disbursement" class="disburse-form">
-                                            <input type="hidden" name="applicationId" value="@app.ApplicationId" />
-                                            <button type="submit" class="btn-action btn-disburse @(app.DisburseStatus?.ToLower() == "disbursed" ? "disabled" : "")" 
-                                            @(app.DisburseStatus?.ToLower() == "disbursed" ? "disabled" : "")>
-                                                <i class="fas fa-money-check-alt"></i>
-                                                <span>@(app.DisburseStatus?.ToLower() == "disbursed" ? "Done" : "Disburse")</span>
-                                            </button>
-                                        </form>
-                                    </div>
+                                <td> 
+                                    <form method="post" asp-action="Disburse" asp-controller="Disbursement" class="disburse-form"> 
+                                        <input type="hidden" name="applicationId" value="@app.ApplicationId" /> 
+                                        <button type="submit" class="btn-action @(app.DisburseStatus?.ToLower() == "disbursed" ? "disabled" : "")" 
+                                        @(app.DisburseStatus?.ToLower() == "disbursed" ? "disabled" : "")> 
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>@(app.DisburseStatus?.ToLower() == "disbursed" ? "Paid" : "Pay")</span>
+                                        </button> 
+                                    </form> 
                                 </td> 
                             } 
                         </tr> 
@@ -289,9 +287,9 @@
     // Handle form submissions with loading state 
     document.querySelectorAll('.disburse-form').forEach(form => { 
         form.addEventListener('submit', function(e) { 
-            const button = this.querySelector('.btn-disburse'); 
+            const button = this.querySelector('.btn-action'); 
             if (!button.disabled) { 
-                button.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Processing...'; 
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Processing...</span>'; 
                 button.disabled = true; 
             } 
         }); 
