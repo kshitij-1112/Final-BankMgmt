@@ -1,4 +1,4 @@
-/* Loan Disbursement Management Styling - Exact Same as Report System */
+/* Loan Disbursement Management Styling - Exact Same as Repayment Table */
 :root {
   --primary: #2c3e50;
   --secondary: #3498db;
@@ -10,9 +10,6 @@
   --danger: #e74c3c;
   --info: #1abc9c;
   --table-header-bg: linear-gradient(to right, #2c3e50, #3498db);
-  --pagination-border: #495057;
-  --pagination-bg: #f8f9fa;
-  --pagination-active-bg: #3498db;
 }
 
 body {
@@ -96,11 +93,6 @@ body {
   font-size: 0.85rem;
 }
 
-.rows-control .form-select:focus {
-  border-color: var(--secondary);
-  box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
-}
-
 .controls-right {
   display: flex;
   align-items: center;
@@ -122,12 +114,7 @@ body {
   border-left: none;
 }
 
-.search-input-group .form-control:focus {
-  border-color: var(--secondary);
-  box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
-}
-
-/* Table Container - Moved closer to controls */
+/* Table Container */
 .table-container {
   background-color: white;
   border-radius: 12px;
@@ -136,31 +123,29 @@ body {
   margin: 10px auto;
   max-width: 92%;
   overflow: hidden;
-  border: 4px solid var(--primary);
+  border: 1px solid #dee2e6;
   display: flex;
   flex-direction: column;
 }
 
-/* Table wrapper - Compact design exactly like repayment tables */
+/* Table wrapper */
 .table-wrapper {
   flex: 1;
   display: flex;
   flex-direction: column;
   padding: 0;
-  overflow: visible;
+  overflow-x: auto;
 }
 
-/* Table Styling - Exact same as repayment tables */
+/* Table Styling - EXACTLY like the image */
 .table {
   margin-bottom: 0;
   border-collapse: separate;
   border-spacing: 0;
   width: 100%;
-  table-layout: auto;
-  font-size: 0.85rem;
 }
 
-/* Table Header - Compact Design exactly like repayment tables */
+/* Table Header - EXACTLY like the image */
 .table thead {
   background: var(--table-header-bg);
 }
@@ -169,174 +154,121 @@ body {
   background: var(--table-header-bg);
   color: white;
   font-weight: 600;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-  padding: 8px 6px;
+  padding: 8px 4px;
   text-transform: uppercase;
-  font-size: 0.7rem;
-  letter-spacing: 0.3px;
+  font-size: 0.65rem;
+  letter-spacing: 0.5px;
   vertical-align: middle;
   text-align: center;
   white-space: nowrap;
-  line-height: 1.2;
-}
-
-.table thead th:first-child {
-  border-left: none;
-}
-
-.table thead th:last-child {
-  border-right: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .table thead th i {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   display: block;
-  margin-bottom: 2px;
+  margin-bottom: 3px;
 }
 
+/* Table Body - EXACTLY like the image */
 .table tbody td {
-  padding: 8px 6px;
-  border: 1px solid #e0e0e0;
-  border-top: none;
+  padding: 8px 4px;
+  border: 1px solid #dee2e6;
   vertical-align: middle;
   font-size: 0.8rem;
-  word-wrap: break-word;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.3;
   text-align: center;
-}
-
-.table tbody td:first-child {
-  border-left: none;
-}
-
-.table tbody td:last-child {
-  border-right: none;
+  white-space: nowrap;
 }
 
 .table tbody tr:hover {
   background-color: rgba(52, 152, 219, 0.05);
-  transition: background-color 0.2s ease;
 }
 
-.table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-/* Special styling for loan data - Same as repayment tables */
+/* Special styling for loan data */
 .amount {
   font-weight: 700;
   color: var(--success);
-  font-size: 0.85rem;
-  white-space: nowrap;
 }
 
 .rate {
   font-weight: 600;
   color: var(--warning);
-  background: rgba(243, 156, 18, 0.1);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.75rem;
 }
 
 .tenure {
   font-weight: 500;
   color: var(--info);
-  font-size: 0.8rem;
 }
 
-/* Status Badge - Very Compact */
+/* Status Badge - EXACTLY like the image */
 .status-badge {
-  padding: 3px 6px;
-  border-radius: 8px;
+  padding: 4px 8px;
+  border-radius: 20px;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
-  gap: 2px;
-  font-size: 0.6rem;
+  gap: 4px;
+  font-size: 0.7rem;
   text-align: center;
-  min-width: 60px;
   justify-content: center;
-  text-transform: uppercase;
-  letter-spacing: 0.2px;
-  white-space: nowrap;
 }
 
 .status-disbursed {
-  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  background-color: #27ae60;
   color: white;
-  box-shadow: 0 1px 3px rgba(39, 174, 96, 0.3);
 }
 
 .status-pending {
-  background: linear-gradient(135deg, #f39c12, #e67e22);
+  background-color: #f39c12;
   color: white;
-  box-shadow: 0 1px 3px rgba(243, 156, 18, 0.3);
 }
 
 .status-not-disbursed {
-  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  background-color: #e74c3c;
   color: white;
-  box-shadow: 0 1px 3px rgba(231, 76, 60, 0.3);
 }
 
-/* Disburse Button - Very Compact like repayment tables */
-.btn-disburse {
-  background: linear-gradient(135deg, var(--success), #1e8449);
-  color: white;
-  border: none;
+/* Action Button - EXACTLY like the image */
+.btn-action {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  border: 1px solid #dee2e6;
   border-radius: 4px;
-  padding: 4px 6px;
-  font-size: 0.6rem;
+  padding: 4px 8px;
+  font-size: 0.7rem;
   font-weight: 600;
-  transition: all 0.3s;
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 35px;
-  height: 35px;
-  text-decoration: none;
-  box-shadow: 0 1px 3px rgba(39, 174, 96, 0.3);
-  gap: 1px;
+  min-width: 60px;
+  cursor: pointer;
 }
 
-.btn-disburse i {
-  font-size: 0.7rem;
-  margin-bottom: 1px;
+.btn-action i {
+  font-size: 0.9rem;
+  margin-bottom: 2px;
 }
 
-.btn-disburse span {
-  font-size: 0.55rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.2px;
+.btn-action span {
+  font-size: 0.65rem;
 }
 
-.btn-disburse:hover {
-  background: linear-gradient(135deg, #1e8449, #196f3d);
-  color: white;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 6px rgba(39, 174, 96, 0.4);
+.btn-action:hover {
+  background-color: #e9ecef;
 }
 
-.btn-disburse:disabled {
-  background: #6c757d;
+.btn-action:disabled {
+  opacity: 0.6;
   cursor: not-allowed;
-  transform: none;
-  box-shadow: 0 1px 3px rgba(108, 117, 125, 0.3);
 }
 
-/* Pagination section - Minimal gap exactly like repayment tables */
+/* Pagination section */
 .pagination-section {
   background-color: #f8f9fa;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid #dee2e6;
   padding: 8px 15px;
-  margin-top: 0;
+  margin-top: auto;
 }
 
 .pagination-info {
@@ -365,63 +297,31 @@ body {
 
 .pagination .page-item .page-link {
   color: #2c3e50;
-  background-color: var(--pagination-bg);
-  border: 3px solid #2c3e50;
-  padding: 8px 12px;
-  font-weight: 700;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  padding: 6px 12px;
+  font-weight: 600;
   font-size: 0.9rem;
-  min-width: 40px;
-  min-height: 40px;
+  min-width: 36px;
+  min-height: 36px;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
-  transition: all 0.3s ease;
+  border-radius: 4px;
   text-decoration: none;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
 .pagination .page-item.disabled .page-link {
   opacity: 0.5;
   cursor: not-allowed;
-  background-color: #e9ecef;
-  border-color: #6c757d;
-  color: #495057;
-  transform: none;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.pagination .page-item.disabled .page-link:hover {
-  background-color: #e9ecef;
-  border-color: #6c757d;
-  color: #495057;
-  transform: none;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .pagination .page-item.active .page-link {
-  background-color: var(--pagination-active-bg);
-  color: white;
-  border-color: var(--secondary);
-  transform: translateY(-2px);
-  box-shadow: 0 3px 6px rgba(52, 152, 219, 0.4);
-  font-weight: 800;
-}
-
-.pagination .page-item.active .page-link:hover {
   background-color: var(--secondary);
   color: white;
-  border-color: var(--primary);
-}
-
-.pagination .page-item:not(.disabled):not(.active) .page-link:hover {
-  background-color: #e9ecef;
   border-color: var(--secondary);
-  color: var(--secondary);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
 }
 
 /* Form styling for inline forms */
@@ -431,30 +331,10 @@ body {
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
-  .table {
-    font-size: 0.8rem;
-  }
-
-  .table thead th {
-    padding: 6px 4px;
-    font-size: 0.65rem;
-  }
-
-  .table tbody td {
-    padding: 6px 4px;
-    font-size: 0.75rem;
-  }
-}
-
 @media (max-width: 768px) {
   .table-container {
     overflow-x: auto;
     max-width: 98%;
-  }
-
-  .table {
-    min-width: 800px;
   }
 
   .dashboard-header {
@@ -483,25 +363,6 @@ body {
   .search-input-group {
     width: 100%;
   }
-
-  .btn-disburse {
-    font-size: 0.55rem;
-    padding: 2px 4px;
-    min-width: 30px;
-    height: 30px;
-  }
-
-  .pagination {
-    gap: 4px;
-    flex-wrap: wrap;
-  }
-
-  .pagination .page-item .page-link {
-    padding: 6px 10px;
-    min-width: 35px;
-    min-height: 35px;
-    font-size: 0.8rem;
-  }
 }
 
 @media (max-width: 576px) {
@@ -524,26 +385,6 @@ body {
     padding: 4px 2px;
     font-size: 0.7rem;
   }
-
-  .btn-disburse {
-    font-size: 0.5rem;
-    padding: 2px 3px;
-    min-width: 25px;
-    height: 25px;
-  }
-
-  .pagination .page-item .page-link {
-    padding: 4px 8px;
-    min-width: 30px;
-    min-height: 30px;
-    font-size: 0.75rem;
-  }
-
-  .status-badge {
-    font-size: 0.55rem;
-    padding: 2px 4px;
-    min-width: 50px;
-  }
 }
 
 /* Utility classes */
@@ -561,13 +402,4 @@ body {
 
 .me-3 {
   margin-right: 1rem;
-}
-
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
-
-/* Smooth transitions */
-* {
-  box-sizing: border-box;
 }
