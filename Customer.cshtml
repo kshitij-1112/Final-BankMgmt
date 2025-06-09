@@ -18,24 +18,22 @@
     <p>Manage your loan repayments and check outstanding balances</p>
 </div>
 
-<!-- Outstanding Balance Section -->
-<div class="balance-section">
-    <h3>
-        <i class="fas fa-search-dollar me-2"></i>
-        Check Outstanding Balance
-    </h3>
-    <form asp-action="GetOutstandingBalance" asp-controller="Repayment" method="get" class="balance-form">
-        <div class="form-group">
-            <label for="loanId">
-                <i class="fas fa-key me-1"></i>
-                Loan ID
+<!-- Outstanding Balance Check - Left Positioned -->
+<div class="balance-check-container">
+    <form asp-action="GetOutstandingBalance" asp-controller="Repayment" method="get" class="balance-check-form">
+        <div class="balance-check-group">
+            <label for="loanId" class="balance-check-label">
+                <i class="fas fa-search-dollar me-1"></i>
+                Check Outstanding Balance:
             </label>
-            <input type="number" class="form-control" name="loanId" id="loanId" placeholder="Enter your Loan ID" required />
+            <div class="balance-input-group">
+                <input type="number" class="form-control balance-input" name="loanId" id="loanId" placeholder="Enter Loan ID" required />
+                <button type="submit" class="btn-balance-check">
+                    <i class="fas fa-search me-1"></i>
+                    Get Balance
+                </button>
+            </div>
         </div>
-        <button type="submit" class="btn-balance">
-            <i class="fas fa-search me-1"></i>
-            Get Balance
-        </button>
     </form>
 </div>
 
