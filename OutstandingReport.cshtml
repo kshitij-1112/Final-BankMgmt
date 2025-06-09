@@ -40,46 +40,20 @@
         </div>
     </div>
 
-    <!-- Table Controls - Fixed Layout -->
-    <div class="table-controls">
-        <!-- Left side - Rows per page -->
-        <div class="rows-control">
-            <label for="rowsPerPage">
-                <i class="fas fa-list-ol"></i>
-                Rows per page:
-            </label>
-            <select id="rowsPerPage" class="form-select" onchange="changeRowsPerPage()">
-                <option value="2" selected>2</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
-            </select>
-        </div>
-
-        <!-- Right side - Search -->
-        <div class="search-control">
-            <div class="input-group search-input-group">
-                <span class="input-group-text">
-                    <i class="fas fa-search"></i>
-                </span>
-                <input type="text" class="form-control" id="searchInput" placeholder="Search outstanding reports..." oninput="searchReports()">
-            </div>
-        </div>
-    </div>
-
     <div class="table-wrapper">
-        <table class="table" id="outstandingReportTable">
+        <table class="table table-bordered" id="outstandingReportTable">
             <thead>
                 <tr>
-                    <th><i class="fas fa-hashtag"></i> Loan ID</th>
+                    <th scope="col" class="col-loan-id"><i class="fas fa-hashtag"></i><br>Loan ID</th>
                     @if (role == "Admin")
                     {
-                        <th><i class="fas fa-user"></i> Customer ID</th>
-                        <th><i class="fas fa-user-tag"></i> Customer Name</th>
+                        <th scope="col" class="col-customer-id"><i class="fas fa-user"></i><br>Customer ID</th>
+                        <th scope="col" class="col-customer-name"><i class="fas fa-user-tag"></i><br>Customer Name</th>
                     }
-                    <th><i class="fas fa-tag"></i> Product Type</th>
-                    <th><i class="fas fa-file-signature"></i> Product Name</th>
-                    <th><i class="fas fa-money-bill-wave"></i> Loan Amount</th>
-                    <th><i class="fas fa-exclamation-triangle"></i> Outstanding Balance</th>
+                    <th scope="col" class="col-product-type"><i class="fas fa-tag"></i><br>Product Type</th>
+                    <th scope="col" class="col-product-name"><i class="fas fa-file-signature"></i><br>Product Name</th>
+                    <th scope="col" class="col-loan-amount"><i class="fas fa-money-bill-wave"></i><br>Loan Amount</th>
+                    <th scope="col" class="col-outstanding-balance"><i class="fas fa-exclamation-triangle"></i><br>Outstanding Balance</th>
                 </tr>
             </thead>
             <tbody class="report-table-body">
@@ -138,7 +112,7 @@
 
     // Global variables for pagination
     let currentPage = 1;
-    let rowsPerPage = 2; // Changed default to 2
+    let rowsPerPage = 10; // Fixed rows per page
     let allRows = [];
     let filteredRows = [];
 
@@ -177,31 +151,8 @@
 
     function clearFilters() {
         $("#loanTypeFilter").val("");
-        $("#searchInput").val("");
 
         filteredRows = [...allRows];
-        currentPage = 1;
-        updateTable();
-    }
-
-    function searchReports() {
-        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-
-        if (searchTerm === '') {
-            filteredRows = [...allRows];
-        } else {
-            filteredRows = allRows.filter(row => {
-                const text = row.textContent.toLowerCase();
-                return text.includes(searchTerm);
-            });
-        }
-
-        currentPage = 1;
-        updateTable();
-    }
-
-    function changeRowsPerPage() {
-        rowsPerPage = parseInt(document.getElementById('rowsPerPage').value);
         currentPage = 1;
         updateTable();
     }
