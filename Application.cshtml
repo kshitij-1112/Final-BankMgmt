@@ -66,98 +66,102 @@
 <!-- Table Container -->
 <div class="table-container">
     <div class="table-wrapper">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th><i class="fas fa-hashtag"></i> Application ID</th>
-                    @if (role == "Admin")
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col" class="col-app-id"><i class="fas fa-hashtag me-2"></i>Application ID</th>
+                        @if (role == "Admin")
+                        {
+                            <th scope="col" class="col-customer-id"><i class="fas fa-user me-2"></i>Customer ID</th>
+                            <th scope="col" class="col-name"><i class="fas fa-user-tag me-2"></i>Name</th>
+                        }
+                        <th scope="col" class="col-product-type"><i class="fas fa-tag me-2"></i>Product Type</th>
+                        <th scope="col" class="col-product-name"><i class="fas fa-box me-2"></i>Product Name</th>
+                        <th scope="col" class="col-interest"><i class="fas fa-percentage me-2"></i>Interest Rate</th>
+                        <th scope="col" class="col-tenure"><i class="fas fa-hourglass-half me-2"></i>Tenure</th>
+                        <th scope="col" class="col-amount"><i class="fas fa-rupee-sign me-2"></i>Loan Amount</th>
+                        <th scope="col" class="col-date"><i class="fas fa-calendar-alt me-2"></i>Application Date</th>
+                        <th scope="col" class="col-status"><i class="fas fa-info-circle me-2"></i>Status</th>
+                        @if (role == "Admin")
+                        {
+                            <th scope="col" class="col-actions"><i class="fas fa-cogs me-2"></i>Actions</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody id="applicationTableBody">
+                    @if (ViewBag.ApplicationList != null)
                     {
-                        <th><i class="fas fa-user"></i> Customer ID</th>
-                        <th><i class="fas fa-user-tag"></i> Name</th>
-                    }
-                    <th><i class="fas fa-tag"></i> Product Type</th>
-                    <th><i class="fas fa-box"></i> Product Name</th>
-                    <th><i class="fas fa-percentage"></i> Interest Rate</th>
-                    <th><i class="fas fa-hourglass-half"></i> Tenure</th>
-                    <th><i class="fas fa-rupee-sign"></i> Loan Amount</th>
-                    <th><i class="fas fa-calendar-alt"></i> Application Date</th>
-                    <th><i class="fas fa-info-circle"></i> Status</th>
-                    @if (role == "Admin")
-                    {
-                        <th class="actions-column"><i class="fas fa-cogs"></i> Actions</th>
-                    }
-                </tr>
-            </thead>
-            <tbody id="applicationTableBody">
-                @if (ViewBag.ApplicationList != null)
-                {
-                    @foreach (var app in ViewBag.ApplicationList)
-                    {
-                        <tr class="application-row" data-application-id="@app.ApplicationId">
-                            <td><span class="application-id">#@app.ApplicationId</span></td>
-                            @if (role == "Admin")
-                            {
-                                <td>@app.CustomerId</td>
-                                <td><strong>@app.Name</strong></td>
-                            }
-                            <td>@app.ProductType</td>
-                            <td>@app.ProductName</td>
-                            <td>@app.InterestRate?.ToString()%</td>
-                            <td>@app.LoanTenure months</td>
-                            <td>₹@app.LoanAmount?.ToString("N0")</td>
-                            <td>@app.ApplicationDate?.ToString("dd-MM-yyyy")</td>
-                            <td>
-                                @{
-                                    string statusClass = "";
-                                    string statusIcon = "";
-                                    switch (app.ApprovalStatus?.ToLower())
-                                    {
-                                        case "approved":
-                                            statusClass = "status-verified";
-                                            statusIcon = "fas fa-check-circle";
-                                            break;
-                                        case "pending":
-                                            statusClass = "status-pending";
-                                            statusIcon = "fas fa-clock";
-                                            break;
-                                        case "rejected":
-                                            statusClass = "status-pending";
-                                            statusIcon = "fas fa-times-circle";
-                                            break;
-                                        default:
-                                            statusClass = "status-pending";
-                                            statusIcon = "fas fa-clock";
-                                            break;
-                                    }
-                                }
-                                <span class="status-badge @statusClass">
-                                    <i class="@statusIcon"></i> @app.ApprovalStatus
-                                </span>
-                            </td>
-                            @if (role == "Admin")
-                            {
-                                <td class="actions-cell">
-                                    <div class="action-buttons">
-                                        <button type="button" class="btn-action btn-process" data-id="@app.CustomerId" data-bs-toggle="modal" data-bs-target="#processApplicationModal">
-                                            <i class="fas fa-cog"></i>
-                                            <span>Process</span>
-                                        </button>
-                                    </div>
+                        @foreach (var app in ViewBag.ApplicationList)
+                        {
+                            <tr class="application-row" data-application-id="@app.ApplicationId">
+                                <td class="text-center">
+                                    <span class="application-id">#@app.ApplicationId</span>
                                 </td>
-                            }
+                                @if (role == "Admin")
+                                {
+                                    <td class="text-center">@app.CustomerId</td>
+                                    <td><strong>@app.Name</strong></td>
+                                }
+                                <td>@app.ProductType</td>
+                                <td>@app.ProductName</td>
+                                <td class="text-center">@app.InterestRate?.ToString()%</td>
+                                <td class="text-center">@app.LoanTenure months</td>
+                                <td class="text-end">₹@app.LoanAmount?.ToString("N0")</td>
+                                <td class="text-center">@app.ApplicationDate?.ToString("dd-MM-yyyy")</td>
+                                <td class="text-center">
+                                    @{
+                                        string statusClass = "";
+                                        string statusIcon = "";
+                                        switch (app.ApprovalStatus?.ToLower())
+                                        {
+                                            case "approved":
+                                                statusClass = "status-verified";
+                                                statusIcon = "fas fa-check-circle";
+                                                break;
+                                            case "pending":
+                                                statusClass = "status-pending";
+                                                statusIcon = "fas fa-clock";
+                                                break;
+                                            case "rejected":
+                                                statusClass = "status-rejected";
+                                                statusIcon = "fas fa-times-circle";
+                                                break;
+                                            default:
+                                                statusClass = "status-pending";
+                                                statusIcon = "fas fa-clock";
+                                                break;
+                                        }
+                                    }
+                                    <span class="status-badge @statusClass">
+                                        <i class="@statusIcon me-1"></i>@app.ApprovalStatus
+                                    </span>
+                                </td>
+                                @if (role == "Admin")
+                                {
+                                    <td class="text-center">
+                                        <div class="action-buttons">
+                                            <button type="button" class="btn-action btn-process" data-id="@app.CustomerId" data-bs-toggle="modal" data-bs-target="#processApplicationModal">
+                                                <i class="fas fa-cog"></i>
+                                                <span>Process</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="@(role == "Admin" ? "11" : "8")" class="text-center py-4">
+                                <i class="fas fa-inbox me-2"></i>No applications found.
+                            </td>
                         </tr>
                     }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="@(role == "Admin" ? "11" : "8")" class="text-center">
-                            <i class="fas fa-inbox me-2"></i>No applications found.
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Fixed Pagination Section -->
@@ -176,73 +180,85 @@
     </div>
 </div>
 
-<!-- Loan Application Modal -->
+<!-- Loan Application Modal - Extra Large -->
 <div class="modal fade" id="loanApplicationModal" tabindex="-1" aria-labelledby="loanApplicationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
         <form id="loanApplicationForm" method="post" asp-action="ApplyForLoan" asp-controller="LoanApplication">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="loanModalLabel">
-                        <i class="fas fa-file-signature"></i> Loan Application
+                        <i class="fas fa-file-signature me-2"></i>Loan Application Form
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <i class="fas fa-tag"></i> Product Type:
-                                </label>
-                                <select class="form-control" id="productTypeDropdown" name="ProductType">
-                                    <option value="">-- Select Product Type --</option>
-                                    @foreach (var type in ViewBag.ProductTypes as List<string>)
-                                    {
-                                        <option value="@type">@type</option>
-                                    }
-                                </select>
+                    <div class="container-fluid">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class="fas fa-tag me-2"></i>Product Type
+                                    </label>
+                                    <select class="form-control form-select" id="productTypeDropdown" name="ProductType" required>
+                                        <option value="">-- Select Product Type --</option>
+                                        @foreach (var type in ViewBag.ProductTypes as List<string>)
+                                        {
+                                            <option value="@type">@type</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="LoanProductId" class="form-label">
+                                        <i class="fas fa-box me-2"></i>Product Name
+                                    </label>
+                                    <select asp-for="LoanProductId" class="form-control form-select" id="productNameDropdown" required>
+                                        <option value="">-- Select Product Name --</option>
+                                    </select>
+                                    <span asp-validation-for="LoanProductId" class="text-danger"></span>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="LoanProductId" class="form-label">
-                                    <i class="fas fa-box"></i> Product Name:
-                                </label>
-                                <select asp-for="LoanProductId" class="form-control" id="productNameDropdown">
-                                    <option value="">-- Select Product Name --</option>
-                                </select>
-                                <span asp-validation-for="LoanProductId" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="LoanAmount" class="form-label">
-                                    <i class="fas fa-rupee-sign"></i> Loan Amount:
-                                </label>
-                                <input asp-for="LoanAmount" type="number" class="form-control" placeholder="Enter loan amount" />
-                                <span asp-validation-for="LoanAmount" class="text-danger"></span>
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="LoanAmount" class="form-label">
+                                        <i class="fas fa-rupee-sign me-2"></i>Loan Amount
+                                    </label>
+                                    <input asp-for="LoanAmount" type="number" class="form-control" placeholder="Enter loan amount" min="1" required />
+                                    <span asp-validation-for="LoanAmount" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="LoanTenure" class="form-label">
+                                        <i class="fas fa-hourglass-half me-2"></i>Tenure (months)
+                                    </label>
+                                    <input asp-for="LoanTenure" type="number" class="form-control" placeholder="Enter loan tenure" min="1" required />
+                                    <span asp-validation-for="LoanTenure" class="text-danger"></span>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="LoanTenure" class="form-label">
-                                    <i class="fas fa-hourglass-half"></i> Tenure (months):
-                                </label>
-                                <input asp-for="LoanTenure" type="number" class="form-control" placeholder="Enter loan tenure" />
-                                <span asp-validation-for="LoanTenure" class="text-danger"></span>
+
+                        <div class="row g-4 mt-3">
+                            <div class="col-12">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    <strong>Note:</strong> Please ensure all information is accurate before submitting your application. 
+                                    You will receive a confirmation email once your application is processed.
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" data-bs-dismiss="modal">
-                        <i class="fas fa-times"></i> Close
+                        <i class="fas fa-times me-2"></i>Cancel
                     </button>
                     <button type="submit" class="btn-primary" name="submitType" value="Submit">
-                        <i class="fas fa-check-circle"></i> Submit Application
+                        <i class="fas fa-check-circle me-2"></i>Submit Application
                     </button>
                 </div>
             </div>
@@ -250,98 +266,100 @@
     </div>
 </div>
 
-<!-- Process Application Modal -->
+<!-- Process Application Modal - Extra Large -->
 <div class="modal fade" id="processApplicationModal" tabindex="-1" aria-labelledby="processApplicationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="processApplicationModalLabel">
-                    <i class="fas fa-file-signature"></i> Loan Application Details
+                    <i class="fas fa-file-signature me-2"></i>Loan Application Details
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label><i class="fas fa-user"></i> Customer ID:</label>
-                            <p id="processCustId" class="form-control-static"></p>
+                <div class="container-fluid">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label"><i class="fas fa-user me-2"></i>Customer ID</label>
+                                <p id="processCustId" class="form-control-static"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label"><i class="fas fa-user-tag me-2"></i>Customer Name</label>
+                                <p id="processName" class="form-control-static"></p>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label><i class="fas fa-user-tag"></i> Name:</label>
-                            <p id="processName" class="form-control-static"></p>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label"><i class="fas fa-percentage me-2"></i>Interest Rate</label>
+                                <p id="processIR" class="form-control-static"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label"><i class="fas fa-hourglass-half me-2"></i>Loan Tenure</label>
+                                <p id="processTenure" class="form-control-static"></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label><i class="fas fa-percentage"></i> Interest Rate:</label>
-                            <p id="processIR" class="form-control-static"></p>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label"><i class="fas fa-tag me-2"></i>Product Type</label>
+                                <p id="processProduct" class="form-control-static"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label"><i class="fas fa-box me-2"></i>Product Name</label>
+                                <p id="processProductName" class="form-control-static"></p>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label><i class="fas fa-hourglass-half"></i> Tenure:</label>
-                            <p id="processTenure" class="form-control-static"></p>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label"><i class="fas fa-rupee-sign me-2"></i>Loan Amount</label>
+                                <p id="processLoanAmount" class="form-control-static"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label"><i class="fas fa-calendar-alt me-2"></i>Application Date</label>
+                                <p id="processApplicationDate" class="form-control-static"></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label><i class="fas fa-tag"></i> Product Type:</label>
-                            <p id="processProduct" class="form-control-static"></p>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label"><i class="fas fa-info-circle me-2"></i>Current Status</label>
+                                <p id="processStatusText" class="form-control-static"></p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label><i class="fas fa-box"></i> Product Name:</label>
-                            <p id="processProductName" class="form-control-static"></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label><i class="fas fa-rupee-sign"></i> Loan Amount:</label>
-                            <p id="processLoanAmount" class="form-control-static"></p>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label><i class="fas fa-calendar-alt"></i> Application Date:</label>
-                            <p id="processApplicationDate" class="form-control-static"></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label><i class="fas fa-info-circle"></i> Current Status:</label>
-                            <p id="processStatusText" class="form-control-static"></p>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="processStatus"><i class="fas fa-edit"></i> Update Status:</label>
-                            <select id="processStatus" class="form-control">
-                                <option value="Approved">Approve</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Rejected">Reject</option>
-                            </select>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="processStatus" class="form-label"><i class="fas fa-edit me-2"></i>Update Status</label>
+                                <select id="processStatus" class="form-control form-select">
+                                    <option value="Approved">Approve</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Rejected">Reject</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn-secondary" data-bs-dismiss="modal">
-                    <i class="fas fa-times"></i> Close
+                    <i class="fas fa-times me-2"></i>Close
                 </button>
                 <button type="button" class="btn-primary" id="saveProcessStatusBtn" data-bs-dismiss="modal">
-                    <i class="fas fa-save"></i> Save
+                    <i class="fas fa-save me-2"></i>Save Changes
                 </button>
             </div>
         </div>
