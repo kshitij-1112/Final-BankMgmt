@@ -1,0 +1,612 @@
+/* Loan Disbursement Management Styling - Exact Same as Loan Product Management */
+:root {
+  --primary: #2c3e50;
+  --secondary: #3498db;
+  --accent: #16a085;
+  --light: #f8f9fa;
+  --dark: #343a40;
+  --success: #27ae60;
+  --warning: #f39c12;
+  --danger: #e74c3c;
+  --info: #1abc9c;
+  --table-header-bg: linear-gradient(to right, #2c3e50, #3498db);
+  --pagination-border: #495057;
+  --pagination-bg: #f8f9fa;
+  --pagination-active-bg: #3498db;
+}
+
+body {
+  background-color: #f5f7fa;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 20px 0;
+}
+
+/* Main Content */
+.main-content {
+  padding: 20px 0;
+  min-height: 100vh;
+}
+
+/* Header Container - Reduced height, increased width with margins */
+.dashboard-header {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border-radius: 15px;
+  padding: 15px 25px; /* Reduced padding from 25px to 15px */
+  margin: 15px auto; /* Reduced margin from 25px to 15px */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 92%; /* Increased from 96% to 92% for more width with margins */
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 1.6rem; /* Reduced from 2rem */
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.dashboard-header p {
+  margin: 8px 0 0 0; /* Reduced from 10px to 8px */
+  opacity: 0.9;
+  font-size: 1rem; /* Reduced from 1.1rem */
+}
+
+/* Table Controls - Moved closer to header */
+.table-controls {
+  background-color: white;
+  border-radius: 12px;
+  padding: 15px 20px; /* Reduced padding from 20px to 15px */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  margin: 10px auto; /* Reduced margin from 20px to 10px */
+  max-width: 92%; /* Match header width */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  min-height: 60px; /* Reduced from 70px */
+}
+
+.rows-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rows-control label {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.9rem; /* Reduced from 0.95rem */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.rows-control .form-select {
+  min-width: 80px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 0.85rem; /* Reduced from 0.9rem */
+}
+
+.rows-control .form-select:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+}
+
+/* Controls Right Side */
+.controls-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Bootstrap Search Input Group */
+.search-input-group {
+  width: 280px; /* Reduced from 300px */
+}
+
+.search-input-group .input-group-text {
+  background-color: var(--secondary);
+  color: white;
+  border: 2px solid var(--secondary);
+}
+
+.search-input-group .form-control {
+  border: 2px solid #e0e0e0;
+  border-left: none;
+}
+
+.search-input-group .form-control:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+}
+
+/* Table Container - Moved closer to controls */
+.table-container {
+  background-color: white;
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  margin: 10px auto; /* Reduced margin from 20px to 10px */
+  max-width: 92%; /* Match header width */
+  overflow: hidden;
+  border: 4px solid var(--primary);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Table wrapper - Compact design exactly like repayment tables */
+.table-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: visible;
+}
+
+/* Table Styling - Exact same as repayment tables */
+.table {
+  margin-bottom: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  table-layout: auto;
+  font-size: 0.85rem;
+}
+
+/* Responsive Column Widths - Percentage Based like repayment tables */
+.col-customer-id {
+  width: 10%;
+  min-width: 80px;
+}
+
+.col-name {
+  width: 15%;
+  min-width: 120px;
+}
+
+.col-product-type {
+  width: 12%;
+  min-width: 100px;
+}
+
+.col-product-name {
+  width: 18%;
+  min-width: 140px;
+}
+
+.col-interest-rate {
+  width: 10%;
+  min-width: 90px;
+}
+
+.col-tenure {
+  width: 10%;
+  min-width: 80px;
+}
+
+.col-loan-amount {
+  width: 15%;
+  min-width: 120px;
+}
+
+.col-status {
+  width: 12%;
+  min-width: 100px;
+}
+
+.col-actions {
+  width: 8%;
+  min-width: 80px;
+}
+
+/* Table Header - Compact Design exactly like repayment tables */
+.table thead {
+  background: var(--table-header-bg);
+}
+
+.table thead th {
+  background: var(--table-header-bg);
+  color: white;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 8px 6px; /* Same as repayment tables */
+  text-transform: uppercase;
+  font-size: 0.7rem; /* Same as repayment tables */
+  letter-spacing: 0.3px;
+  vertical-align: middle;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.table thead th:first-child {
+  border-left: none;
+}
+
+.table thead th:last-child {
+  border-right: none;
+}
+
+.table thead th i {
+  font-size: 0.8rem;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.table tbody td {
+  padding: 8px 6px; /* Same as repayment tables */
+  border: 1px solid #e0e0e0;
+  border-top: none;
+  vertical-align: middle;
+  font-size: 0.8rem; /* Same as repayment tables */
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+  text-align: center; /* Center all table content */
+}
+
+.table tbody td:first-child {
+  border-left: none;
+}
+
+.table tbody td:last-child {
+  border-right: none;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(52, 152, 219, 0.05);
+  transition: background-color 0.2s ease;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Status Badge - Compact and Optimized */
+.status-badge {
+  padding: 4px 8px; /* Reduced padding */
+  border-radius: 12px; /* Reduced border radius */
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px; /* Reduced gap */
+  font-size: 0.65rem; /* Reduced font size */
+  text-align: center;
+  min-width: 70px; /* Reduced min-width */
+  justify-content: center;
+  text-transform: uppercase;
+  letter-spacing: 0.3px; /* Reduced letter spacing */
+  white-space: nowrap;
+}
+
+.status-disbursed {
+  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  color: white;
+  box-shadow: 0 1px 3px rgba(39, 174, 96, 0.3); /* Reduced shadow */
+}
+
+.status-pending {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  color: white;
+  box-shadow: 0 1px 3px rgba(243, 156, 18, 0.3); /* Reduced shadow */
+}
+
+.status-not-disbursed {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  box-shadow: 0 1px 3px rgba(231, 76, 60, 0.3); /* Reduced shadow */
+}
+
+/* Special styling for loan data - Same as repayment tables */
+.amount {
+  font-weight: 700;
+  color: var(--success);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.rate {
+  font-weight: 600;
+  color: var(--warning);
+  background: rgba(243, 156, 18, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.tenure {
+  font-weight: 500;
+  color: var(--info);
+  font-size: 0.8rem;
+}
+
+/* Disburse Button - Very Compact like repayment tables */
+.btn-disburse {
+  background: linear-gradient(135deg, var(--success), #1e8449);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px; /* Reduced padding */
+  font-size: 0.6rem; /* Reduced font size */
+  font-weight: 600;
+  transition: all 0.3s;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px; /* Reduced gap */
+  text-decoration: none;
+  box-shadow: 0 1px 3px rgba(39, 174, 96, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  min-width: 60px; /* Reduced min-width */
+  justify-content: center;
+}
+
+.btn-disburse:hover {
+  background: linear-gradient(135deg, #1e8449, #196f3d);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(39, 174, 96, 0.4);
+}
+
+.btn-disburse:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 1px 3px rgba(108, 117, 125, 0.3);
+}
+
+.btn-disburse i {
+  font-size: 0.7rem; /* Reduced icon size */
+}
+
+/* Pagination section - Minimal gap exactly like repayment tables */
+.pagination-section {
+  background-color: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
+  padding: 8px 15px;
+  margin-top: 0;
+}
+
+.pagination-info {
+  color: var(--primary);
+  font-weight: 500;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.pagination {
+  margin: 4px 0 0 0;
+  gap: 6px;
+  justify-content: center;
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.pagination .page-item {
+  display: inline-block;
+}
+
+.pagination .page-item .page-link {
+  color: #2c3e50;
+  background-color: var(--pagination-bg);
+  border: 3px solid #2c3e50;
+  padding: 8px 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  min-width: 40px;
+  min-height: 40px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.pagination .page-item.disabled .page-link {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #e9ecef;
+  border-color: #6c757d;
+  color: #495057;
+  transform: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.pagination .page-item.disabled .page-link:hover {
+  background-color: #e9ecef;
+  border-color: #6c757d;
+  color: #495057;
+  transform: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: var(--pagination-active-bg);
+  color: white;
+  border-color: var(--secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(52, 152, 219, 0.4);
+  font-weight: 800;
+}
+
+.pagination .page-item.active .page-link:hover {
+  background-color: var(--secondary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.pagination .page-item:not(.disabled):not(.active) .page-link:hover {
+  background-color: #e9ecef;
+  border-color: var(--secondary);
+  color: var(--secondary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
+}
+
+/* Form styling for inline forms */
+.disburse-form {
+  margin: 0;
+  display: inline-block;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .table {
+    font-size: 0.8rem;
+  }
+
+  .table thead th {
+    padding: 6px 4px;
+    font-size: 0.65rem;
+  }
+
+  .table tbody td {
+    padding: 6px 4px;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-container {
+    overflow-x: auto;
+    max-width: 98%;
+  }
+
+  .table {
+    min-width: 800px;
+  }
+
+  .dashboard-header {
+    margin: 15px auto;
+    padding: 15px;
+    max-width: 98%;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.3rem;
+  }
+
+  .table-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+    min-height: 120px; /* Reduced from 140px */
+    max-width: 98%;
+  }
+
+  .controls-right {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-input-group {
+    width: 100%;
+  }
+
+  .btn-disburse {
+    font-size: 0.55rem;
+    padding: 3px 6px;
+    min-width: 50px;
+  }
+
+  .pagination {
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .pagination .page-item .page-link {
+    padding: 6px 10px;
+    min-width: 35px;
+    min-height: 35px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .dashboard-header h1 {
+    font-size: 1.2rem;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .dashboard-header p {
+    font-size: 0.9rem;
+  }
+
+  .table thead th {
+    padding: 4px 2px;
+    font-size: 0.6rem;
+  }
+
+  .table tbody td {
+    padding: 4px 2px;
+    font-size: 0.7rem;
+  }
+
+  .btn-disburse {
+    font-size: 0.5rem;
+    padding: 2px 4px;
+    min-width: 40px;
+  }
+
+  .pagination .page-item .page-link {
+    padding: 4px 8px;
+    min-width: 30px;
+    min-height: 30px;
+    font-size: 0.75rem;
+  }
+
+  .status-badge {
+    font-size: 0.55rem;
+    padding: 3px 6px;
+    min-width: 60px;
+  }
+}
+
+/* Utility classes */
+.text-center {
+  text-align: center;
+}
+
+.me-1 {
+  margin-right: 0.25rem;
+}
+
+.me-2 {
+  margin-right: 0.5rem;
+}
+
+.me-3 {
+  margin-right: 1rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+/* Smooth transitions */
+* {
+  box-sizing: border-box;
+}
