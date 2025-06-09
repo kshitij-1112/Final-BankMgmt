@@ -1,0 +1,901 @@
+/* Loan Product Management Styling - Compact Design Like Repayment Tables */
+:root {
+    --primary: #2c3e50;
+    --secondary: #3498db;
+    --accent: #16a085;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --success: #27ae60;
+    --warning: #f39c12;
+    --danger: #e74c3c;
+    --info: #1abc9c;
+    --table-header-bg: linear-gradient(to right, #2c3e50, #3498db);
+    --pagination-border: #495057;
+    --pagination-bg: #f8f9fa;
+    --pagination-active-bg: #3498db;
+    --navbar-height: 70px;
+}
+
+body {
+    background-color: #f5f7fa;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px 0;
+}
+
+/* Main Content */
+.main-content {
+    padding: 20px 0;
+    min-height: 100vh;
+}
+
+/* Header Container - Reduced height, increased width with margins */
+.dashboard-header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border-radius: 15px;
+    padding: 15px 25px; /* Reduced padding from 25px to 15px */
+    margin: 15px auto; /* Reduced margin from 25px to 15px */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 92%; /* Increased from 96% to 92% for more width with margins */
+}
+
+    .dashboard-header h1 {
+        margin: 0;
+        font-size: 1.6rem; /* Reduced from 2rem */
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .dashboard-header p {
+        margin: 8px 0 0 0; /* Reduced from 10px to 8px */
+        opacity: 0.9;
+        font-size: 1rem; /* Reduced from 1.1rem */
+    }
+
+/* Loan Type Controls - Moved closer to header */
+.loan-type-controls {
+    max-width: 92%; /* Match header width */
+    margin: 10px auto; /* Reduced margin from 20px to 10px */
+    background-color: white;
+    border-radius: 12px;
+    padding: 15px 20px; /* Reduced padding from 20px to 15px */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.loan-type-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.loan-btn {
+    padding: 12px 20px; /* Reduced padding from 15px 25px */
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem; /* Reduced from 1rem */
+    transition: all 0.3s;
+    border: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    min-width: 180px; /* Reduced from 200px */
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+    .loan-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .loan-btn:hover::before {
+        left: 100%;
+    }
+
+    .loan-btn i {
+        font-size: 1rem; /* Reduced from 1.2rem */
+        margin-right: 8px; /* Reduced from 10px */
+    }
+
+.btn-personal {
+    background: linear-gradient(135deg, #ff7979, #eb4d4b);
+    color: white;
+}
+
+    .btn-personal:hover,
+    .btn-personal.active {
+        background: linear-gradient(135deg, #ff6b6b, #e84118);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 15px rgba(235, 77, 75, 0.4);
+        color: white;
+    }
+
+.btn-home {
+    background: linear-gradient(135deg, #55efc4, #00b894);
+    color: white;
+}
+
+    .btn-home:hover,
+    .btn-home.active {
+        background: linear-gradient(135deg, #00b894, #00a885);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 15px rgba(0, 184, 148, 0.4);
+        color: white;
+    }
+
+.btn-vehicle {
+    background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+    color: #2d3436;
+}
+
+    .btn-vehicle:hover,
+    .btn-vehicle.active {
+        background: linear-gradient(135deg, #fdcb6e, #f7b731);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 15px rgba(253, 203, 110, 0.4);
+        color: #2d3436;
+    }
+
+/* Table Container - Moved closer to controls */
+.table-container {
+    background-color: white;
+    border-radius: 12px;
+    padding: 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    margin: 10px auto; /* Reduced margin from 20px to 10px */
+    max-width: 92%; /* Match header width */
+    overflow: hidden;
+    border: 4px solid var(--primary);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Section Header - Reduced height */
+.section-header {
+    background: linear-gradient(135deg, #ecf0f1, #bdc3c7);
+    padding: 15px 20px; /* Reduced padding from 20px 25px */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--primary);
+}
+
+.section-info h4 {
+    color: var(--primary);
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.1rem; /* Reduced font size */
+}
+
+.section-info p {
+    margin: 3px 0 0 0; /* Reduced from 5px */
+    color: #7f8c8d;
+    font-size: 0.9rem; /* Reduced font size */
+}
+
+.add-loan-btn {
+    background: linear-gradient(135deg, var(--success), #1e8449);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px; /* Reduced padding from 10px 20px */
+    font-weight: 600;
+    font-size: 0.85rem; /* Reduced font size */
+    transition: all 0.3s;
+    box-shadow: 0 4px 6px rgba(39, 174, 96, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 6px; /* Reduced from 8px */
+}
+
+    .add-loan-btn:hover {
+        background: linear-gradient(135deg, #1e8449, #196f3d);
+        transform: translateY(-2px);
+        color: white;
+        box-shadow: 0 6px 12px rgba(39, 174, 96, 0.3);
+    }
+
+/* Table Controls - Separated layout */
+.table-controls {
+    background-color: white;
+    border-radius: 12px;
+    padding: 15px 20px; /* Reduced padding from 20px */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    margin: 10px auto; /* Reduced margin from 20px to 10px */
+    max-width: 92%; /* Match header width */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 60px; /* Reduced from 70px */
+}
+
+/* Left side - Rows control */
+.rows-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+}
+
+    .rows-control label {
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+    }
+
+    .rows-control .form-select {
+        min-width: 80px;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
+        font-size: 0.9rem;
+    }
+
+        .rows-control .form-select:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        }
+
+/* Right side - Search control */
+.search-control {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+}
+
+.search-input-group {
+    width: 300px;
+}
+
+    .search-input-group .input-group-text {
+        background-color: var(--secondary);
+        color: white;
+        border: 2px solid var(--secondary);
+    }
+
+    .search-input-group .form-control {
+        border: 2px solid #e0e0e0;
+        border-left: none;
+    }
+
+        .search-input-group .form-control:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        }
+
+/* Table wrapper - Compact design exactly like repayment tables */
+.table-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: visible;
+}
+
+/* Table Styling - Exact same as repayment tables */
+.table {
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    table-layout: auto;
+    font-size: 0.85rem;
+}
+
+/* Responsive Column Widths - Percentage Based like repayment tables */
+.col-product-name {
+    width: 20%;
+    min-width: 120px;
+}
+
+.col-min-amount, .col-max-amount {
+    width: 15%;
+    min-width: 100px;
+}
+
+.col-interest-rate {
+    width: 12%;
+    min-width: 90px;
+}
+
+.col-tenure {
+    width: 12%;
+    min-width: 90px;
+}
+
+.col-actions {
+    width: 16%;
+    min-width: 120px;
+}
+
+/* Table Header - Compact Design exactly like repayment tables */
+.table thead {
+    background: var(--table-header-bg);
+}
+
+    .table thead th {
+        background: var(--table-header-bg);
+        color: white;
+        font-weight: 600;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        padding: 8px 6px; /* Same as repayment tables */
+        text-transform: uppercase;
+        font-size: 0.7rem; /* Same as repayment tables */
+        letter-spacing: 0.3px;
+        vertical-align: middle;
+        text-align: center;
+        white-space: nowrap;
+        line-height: 1.2;
+    }
+
+        .table thead th:first-child {
+            border-left: none;
+        }
+
+        .table thead th:last-child {
+            border-right: none;
+        }
+
+        .table thead th i {
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+.table tbody td {
+    padding: 8px 6px; /* Same as repayment tables */
+    border: 1px solid #e0e0e0;
+    border-top: none;
+    vertical-align: middle;
+    font-size: 0.8rem; /* Same as repayment tables */
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+    text-align: center; /* Center all table content */
+}
+
+    .table tbody td:first-child {
+        border-left: none;
+    }
+
+    .table tbody td:last-child {
+        border-right: none;
+    }
+
+.table tbody tr:hover {
+    background-color: rgba(52, 152, 219, 0.05);
+    transition: background-color 0.2s ease;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Special styling for loan data - Same as repayment tables */
+.amount {
+    font-weight: 700;
+    color: var(--success);
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.rate {
+    font-weight: 600;
+    color: var(--warning);
+    background: rgba(243, 156, 18, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+}
+
+.tenure {
+    font-weight: 500;
+    color: var(--info);
+    font-size: 0.8rem;
+}
+
+/* Action Buttons - Very Compact like repayment tables */
+.action-buttons {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-action {
+    border-radius: 4px;
+    padding: 4px 6px;
+    font-size: 0.6rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    border: 2px solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 35px;
+    height: 35px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    gap: 1px;
+    text-decoration: none;
+}
+
+    .btn-action i {
+        font-size: 0.7rem;
+        margin-bottom: 1px;
+    }
+
+    .btn-action span {
+        font-size: 0.55rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.2px;
+    }
+
+.btn-edit {
+    background-color: #ff9500;
+    color: white;
+    border-color: #ff9500;
+}
+
+    .btn-edit:hover {
+        background-color: #e6850e;
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 6px rgba(255, 149, 0, 0.3);
+        border-color: #e6850e;
+    }
+
+.btn-delete {
+    background-color: #ff4757;
+    color: white;
+    border-color: #ff4757;
+}
+
+    .btn-delete:hover {
+        background-color: #ff3742;
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 6px rgba(255, 71, 87, 0.3);
+        border-color: #ff3742;
+    }
+
+/* Pagination section - Minimal gap exactly like repayment tables */
+.pagination-section {
+    background-color: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+    padding: 8px 15px;
+    margin-top: 0;
+}
+
+.pagination-info {
+    color: var(--primary);
+    font-weight: 500;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.pagination {
+    margin: 4px 0 0 0;
+    gap: 6px;
+    justify-content: center;
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+    .pagination .page-item {
+        display: inline-block;
+    }
+
+        .pagination .page-item .page-link {
+            color: #2c3e50;
+            background-color: var(--pagination-bg);
+            border: 3px solid #2c3e50;
+            padding: 8px 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            min-width: 40px;
+            min-height: 40px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #e9ecef;
+            border-color: #6c757d;
+            color: #495057;
+            transform: none;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+            .pagination .page-item.disabled .page-link:hover {
+                background-color: #e9ecef;
+                border-color: #6c757d;
+                color: #495057;
+                transform: none;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            }
+
+        .pagination .page-item.active .page-link {
+            background-color: var(--pagination-active-bg);
+            color: white;
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 3px 6px rgba(52, 152, 219, 0.4);
+            font-weight: 800;
+        }
+
+            .pagination .page-item.active .page-link:hover {
+                background-color: var(--secondary);
+                color: white;
+                border-color: var(--primary);
+            }
+
+        .pagination .page-item:not(.disabled):not(.active) .page-link:hover {
+            background-color: #e9ecef;
+            border-color: var(--secondary);
+            color: var(--secondary);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
+        }
+
+/* Modal Styling */
+.modal-content {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.modal-header {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    color: white;
+    border-bottom: none;
+    padding: 20px 25px;
+}
+
+.modal-title {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-body {
+    padding: 25px;
+    background-color: #fafafa;
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+    .form-group .form-label {
+        font-weight: 600;
+        color: var(--primary);
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.95rem;
+    }
+
+.form-control {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px 15px;
+    transition: all 0.3s;
+    font-size: 0.95rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+    .form-control:focus {
+        border-color: var(--secondary);
+        box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        outline: none;
+    }
+
+    .form-control[readonly] {
+        background-color: #f8f9fa;
+        opacity: 0.8;
+    }
+
+/* Form Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 25px;
+    font-weight: 600;
+    transition: all 0.3s;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+    }
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 25px;
+    font-weight: 600;
+    transition: all 0.3s;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+/* Close button styling */
+.btn-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    opacity: 0.8;
+}
+
+    .btn-close:hover {
+        opacity: 1;
+    }
+
+/* Row styling */
+.row {
+    display: flex;
+    margin: 0 -10px;
+    flex-wrap: wrap;
+}
+
+.col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+/* Validation errors */
+.text-danger {
+    color: var(--danger);
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: block;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .table {
+        font-size: 0.8rem;
+    }
+
+        .table thead th {
+            padding: 6px 4px;
+            font-size: 0.65rem;
+        }
+
+        .table tbody td {
+            padding: 6px 4px;
+            font-size: 0.75rem;
+        }
+}
+
+@media (max-width: 768px) {
+    .table-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+        min-height: auto;
+        padding: 15px;
+    }
+
+    .rows-control,
+    .search-control {
+        justify-content: center;
+    }
+
+    .search-input-group {
+        width: 100%;
+    }
+
+    .table-container {
+        overflow-x: auto;
+        max-width: 98%;
+    }
+
+    .table {
+        min-width: 800px;
+    }
+
+    .dashboard-header {
+        margin: 15px auto;
+        padding: 15px;
+        max-width: 98%;
+    }
+
+        .dashboard-header h1 {
+            font-size: 1.3rem;
+        }
+
+    .loan-type-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .loan-btn {
+        min-width: 100%;
+    }
+
+    .section-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .btn-action {
+        font-size: 0.55rem;
+        padding: 2px 4px;
+        min-width: 30px;
+        height: 30px;
+    }
+
+    .col-md-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .pagination {
+        gap: 4px;
+        flex-wrap: wrap;
+    }
+
+        .pagination .page-item .page-link {
+            padding: 6px 10px;
+            min-width: 35px;
+            min-height: 35px;
+            font-size: 0.8rem;
+        }
+}
+
+@media (max-width: 576px) {
+    .dashboard-header h1 {
+        font-size: 1.2rem;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .dashboard-header p {
+        font-size: 0.9rem;
+    }
+
+    .table thead th {
+        padding: 4px 2px;
+        font-size: 0.6rem;
+    }
+
+    .table tbody td {
+        padding: 4px 2px;
+        font-size: 0.7rem;
+    }
+
+    .btn-action {
+        font-size: 0.5rem;
+        padding: 2px 3px;
+        min-width: 25px;
+        height: 25px;
+    }
+
+    .pagination .page-item .page-link {
+        padding: 4px 8px;
+        min-width: 30px;
+        min-height: 30px;
+        font-size: 0.75rem;
+    }
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Smooth transitions */
+* {
+    box-sizing: border-box;
+}
+
+/* Utility classes */
+.d-flex {
+    display: flex;
+}
+
+.justify-content-end {
+    justify-content: flex-end;
+}
+
+.gap-2 {
+    gap: 0.5rem;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.me-1 {
+    margin-right: 0.25rem;
+}
+
+.me-2 {
+    margin-right: 0.5rem;
+}
+
+.me-3 {
+    margin-right: 1rem;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem;
+}
+
+.text-center {
+    text-align: center;
+}
