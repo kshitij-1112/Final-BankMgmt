@@ -107,14 +107,16 @@
                             @if (role == "Admin") 
                             { 
                                 <td class="text-center"> 
-                                    <form method="post" asp-action="Disburse" asp-controller="Disbursement" class="disburse-form"> 
-                                        <input type="hidden" name="applicationId" value="@app.ApplicationId" /> 
-                                        <button type="submit" class="btn btn-disburse @(app.DisburseStatus?.ToLower() == "disbursed" ? "disabled" : "")" 
-                                        @(app.DisburseStatus?.ToLower() == "disbursed" ? "disabled" : "")> 
-                                            <i class="fas fa-money-check-alt me-1"></i> 
-                                            @(app.DisburseStatus?.ToLower() == "disbursed" ? "Disbursed" : "Disburse") 
-                                        </button> 
-                                    </form> 
+                                    <div class="action-buttons">
+                                        <form method="post" asp-action="Disburse" asp-controller="Disbursement" class="disburse-form">
+                                            <input type="hidden" name="applicationId" value="@app.ApplicationId" />
+                                            <button type="submit" class="btn-action btn-disburse @(app.DisburseStatus?.ToLower() == "disbursed" ? "disabled" : "")" 
+                                            @(app.DisburseStatus?.ToLower() == "disbursed" ? "disabled" : "")>
+                                                <i class="fas fa-money-check-alt"></i>
+                                                <span>@(app.DisburseStatus?.ToLower() == "disbursed" ? "Done" : "Disburse")</span>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td> 
                             } 
                         </tr> 
