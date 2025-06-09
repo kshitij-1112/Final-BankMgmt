@@ -1,4 +1,4 @@
-/* Loan Product Management Styling - Compact Design Like Repayment Tables */
+/* Loan Product Management Styling - Exact Same as Report System */
 :root {
     --primary: #2c3e50;
     --secondary: #3498db;
@@ -13,7 +13,6 @@
     --pagination-border: #495057;
     --pagination-bg: #f8f9fa;
     --pagination-active-bg: #3498db;
-    --navbar-height: 70px;
 }
 
 body {
@@ -111,16 +110,17 @@ body {
         margin-right: 8px; /* Reduced from 10px */
     }
 
+/* Loan button colors - Same as report buttons */
 .btn-personal {
-    background: linear-gradient(135deg, #ff7979, #eb4d4b);
+    background: linear-gradient(135deg, #74b9ff, #0984e3);
     color: white;
 }
 
     .btn-personal:hover,
     .btn-personal.active {
-        background: linear-gradient(135deg, #ff6b6b, #e84118);
+        background: linear-gradient(135deg, #0984e3, #0770c4);
         transform: translateY(-3px);
-        box-shadow: 0 8px 15px rgba(235, 77, 75, 0.4);
+        box-shadow: 0 8px 15px rgba(116, 185, 255, 0.4);
         color: white;
     }
 
@@ -131,23 +131,23 @@ body {
 
     .btn-home:hover,
     .btn-home.active {
-        background: linear-gradient(135deg, #00b894, #00a885);
+        background: linear-gradient(135deg, #00b894, #00a085);
         transform: translateY(-3px);
-        box-shadow: 0 8px 15px rgba(0, 184, 148, 0.4);
+        box-shadow: 0 8px 15px rgba(85, 239, 196, 0.4);
         color: white;
     }
 
 .btn-vehicle {
-    background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
-    color: #2d3436;
+    background: linear-gradient(135deg, #fdcb6e, #e17055);
+    color: white;
 }
 
     .btn-vehicle:hover,
     .btn-vehicle.active {
-        background: linear-gradient(135deg, #fdcb6e, #f7b731);
+        background: linear-gradient(135deg, #e17055, #d63031);
         transform: translateY(-3px);
         box-shadow: 0 8px 15px rgba(253, 203, 110, 0.4);
-        color: #2d3436;
+        color: white;
     }
 
 /* Table Container - Moved closer to controls */
@@ -187,6 +187,36 @@ body {
     font-size: 0.9rem; /* Reduced font size */
 }
 
+/* Export and Filter Controls */
+.export-filter-controls {
+    display: flex;
+    gap: 8px; /* Reduced from 10px */
+    align-items: center;
+}
+
+.btn-export {
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px; /* Reduced padding from 10px 20px */
+    font-weight: 600;
+    font-size: 0.85rem; /* Reduced font size */
+    transition: all 0.3s;
+    box-shadow: 0 4px 6px rgba(162, 155, 254, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px; /* Reduced from 8px */
+}
+
+    .btn-export:hover {
+        background: linear-gradient(135deg, #6c5ce7, #5f3dc4);
+        transform: translateY(-2px);
+        color: white;
+        box-shadow: 0 6px 12px rgba(162, 155, 254, 0.4);
+    }
+
+/* Add loan button styling - Same as export button */
 .add-loan-btn {
     background: linear-gradient(135deg, var(--success), #1e8449);
     color: white;
@@ -208,77 +238,6 @@ body {
         color: white;
         box-shadow: 0 6px 12px rgba(39, 174, 96, 0.3);
     }
-
-/* Table Controls - Separated layout */
-.table-controls {
-    background-color: white;
-    border-radius: 12px;
-    padding: 15px 20px; /* Reduced padding from 20px */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    margin: 10px auto; /* Reduced margin from 20px to 10px */
-    max-width: 92%; /* Match header width */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    min-height: 60px; /* Reduced from 70px */
-}
-
-/* Left side - Rows control */
-.rows-control {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex: 0 0 auto;
-}
-
-    .rows-control label {
-        color: var(--primary);
-        font-weight: 600;
-        font-size: 0.95rem;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        white-space: nowrap;
-    }
-
-    .rows-control .form-select {
-        min-width: 80px;
-        border: 2px solid #e0e0e0;
-        border-radius: 6px;
-        font-size: 0.9rem;
-    }
-
-        .rows-control .form-select:focus {
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
-        }
-
-/* Right side - Search control */
-.search-control {
-    display: flex;
-    align-items: center;
-    flex: 0 0 auto;
-}
-
-.search-input-group {
-    width: 300px;
-}
-
-    .search-input-group .input-group-text {
-        background-color: var(--secondary);
-        color: white;
-        border: 2px solid var(--secondary);
-    }
-
-    .search-input-group .form-control {
-        border: 2px solid #e0e0e0;
-        border-left: none;
-    }
-
-        .search-input-group .form-control:focus {
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
-        }
 
 /* Table wrapper - Compact design exactly like repayment tables */
 .table-wrapper {
@@ -735,23 +694,6 @@ body {
 }
 
 @media (max-width: 768px) {
-    .table-controls {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 15px;
-        min-height: auto;
-        padding: 15px;
-    }
-
-    .rows-control,
-    .search-control {
-        justify-content: center;
-    }
-
-    .search-input-group {
-        width: 100%;
-    }
-
     .table-container {
         overflow-x: auto;
         max-width: 98%;
