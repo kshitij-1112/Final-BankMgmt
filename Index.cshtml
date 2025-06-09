@@ -11,12 +11,11 @@
 
 <link rel="stylesheet" href="~/css/loan-product.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <div class="main-content">
-    <!-- Dashboard Header - Reduced height, increased width -->
+    <!-- Dashboard Header -->
     <div class="dashboard-header">
         <h1>
             <i class="fas fa-hand-holding-usd me-3"></i>
@@ -25,309 +24,468 @@
         <p>Explore our comprehensive loan options tailored to your needs</p>
     </div>
 
-    <!-- Loan Type Buttons - Moved closer to header -->
-    <div class="loan-type-controls">
-        <div class="loan-type-buttons">
-            <button class="btn loan-btn btn-personal" onclick="showLoan('personal')">
+    <!-- Product Type Buttons -->
+    <div class="product-type-controls">
+        <div class="product-type-buttons">
+            <button class="btn product-btn btn-personal-product active" onclick="showProduct('personal')">
                 <i class="fas fa-user me-2"></i> Personal Loans
             </button>
-            <button class="btn loan-btn btn-home" onclick="showLoan('home')">
+            <button class="btn product-btn btn-home-product" onclick="showProduct('home')">
                 <i class="fas fa-home me-2"></i> Home Loans
             </button>
-            <button class="btn loan-btn btn-vehicle" onclick="showLoan('vehicle')">
+            <button class="btn product-btn btn-vehicle-product" onclick="showProduct('vehicle')">
                 <i class="fas fa-car me-2"></i> Vehicle Loans
             </button>
         </div>
     </div>
 
-    <!-- Loan Sections -->
-    @foreach (var type in new[] { "Personal", "Home", "Vehicle" })
-    {
-        var id = type.ToLower();
-        <div id="@id" class="loan-section table-container" style="display:none;">
-            <!-- Section Header - Reduced height -->
-            <div class="section-header">
-                <div class="section-info">
-                    <span class="badge bg-secondary mb-2">@type Loans</span>
-                    <h4 class="mb-2">
-                        <i class="fas @(type == "Home" ? "fa-home" : type == "Vehicle" ? "fa-car" : "fa-user") me-2"></i>
-                        @type Loans
-                    </h4>
-                    <p class="text-muted">Manage your @type loan products below.</p>
-                </div>
-                <div class="export-filter-controls">
-                    @if (role == "Admin")
-                    {
-                        <button class="btn btn-export add-loan-btn" data-bs-toggle="modal" data-bs-target="#addLoanModal" onclick="prefillAddForm('@type')">
-                            <i class="fas fa-plus me-1"></i> Create @type Loan
-                        </button>
-                    }
-                </div>
-            </div>
+    <!-- Dynamic Product Container -->
+    <div id="productContainer">
+        <!-- Products will be loaded here -->
+    </div>
+</div>
 
-            <!-- Table - Compact design exactly like repayment tables -->
-            <div class="table-wrapper">
-                <table class="table table-bordered" id="@(id)Table">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="col-product-name"><i class="fas fa-tag"></i><br>Product Name</th>
-                            <th scope="col" class="col-min-amount"><i class="fas fa-money-bill-wave"></i><br>Min Amount</th>
-                            <th scope="col" class="col-max-amount"><i class="fas fa-money-bill-wave"></i><br>Max Amount</th>
-                            <th scope="col" class="col-interest-rate"><i class="fas fa-percentage"></i><br>Interest Rate</th>
-                            <th scope="col" class="col-tenure"><i class="fas fa-calendar-alt"></i><br>Tenure</th>
-                            @if (role == "Admin")
-                            {
-                                <th scope="col" class="col-actions"><i class="fas fa-cogs"></i><br>Actions</th>
-                            }
-                        </tr>
-                    </thead>
-                    <tbody class="loan-table-body" data-type="@id">
-                        @foreach (var product in Model.Where(p => p.ProductType.ToLower() == id))
-                        {
-                            <tr class="loan-row" data-loan-id="@product.LoanProductId">
-                                <td class="text-center"><strong>@product.ProductName</strong></td>
-                                <td class="text-center"><span class="amount">₹@product.MinAmount.ToString("N0")</span></td>
-                                <td class="text-center"><span class="amount">₹@product.MaxAmount.ToString("N0")</span></td>
-                                <td class="text-center"><span class="rate">@product.InterestRate%</span></td>
-                                <td class="text-center"><span class="tenure">@product.Tenure months</span></td>
-                                @if (role == "Admin")
-                                {
-                                    <td class="text-center">
-                                        <div class="action-buttons">
-                                            <button class="btn-action btn-edit" data-bs-toggle="modal" data-bs-target="#updateLoanModal" onclick="loadUpdateForm(@product.LoanProductId)">
-                                                <i class="fas fa-edit"></i>
-                                                <span>Edit</span>
-                                            </button>
-                                            <a href="@Url.Action("Delete", new { id = product.LoanProductId })" class="btn-action btn-delete" onclick="return confirmDelete(@product.LoanProductId);">
-                                                <i class="fas fa-trash"></i>
-                                                <span>Delete</span>
-                                            </a>
-                                        </div>
-                                    </td>
-                                }
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Pagination Section -->
-            <div class="pagination-section">
-                <div class="pagination-info" id="@(id)PaginationInfo">
-                    <!-- Pagination info will be generated by JavaScript -->
-                </div>
-                <nav aria-label="@type loan pagination">
-                    <ul class="pagination" id="@(id)PaginationContainer">
-                        <!-- Pagination buttons will be generated by JavaScript -->
-                    </ul>
-                </nav>
-            </div>
+<!-- Personal Loan Section -->
+<div id="personal" class="product-section table-container" style="display:none;">
+    <div class="section-header">
+        <div class="section-info">
+            <span class="badge bg-primary mb-2">Personal Loan Products</span>
+            <h4 class="mb-2">
+                <i class="fas fa-user me-2"></i>
+                Personal Loan Products
+            </h4>
+            <p class="text-muted">Manage personal loan products and configurations.</p>
         </div>
-    }
-
-    <!-- Add Modal -->
-    <div class="modal fade" id="addLoanModal" tabindex="-1" aria-labelledby="addLoanModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addLoanModalLabel">
-                        <i class="fas fa-plus"></i> Add Loan Product
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    @Html.Partial("AddLoanProduct", new LoanProduct())
-                </div>
-            </div>
+        <div class="export-filter-controls">
+            @if (role == "Admin")
+            {
+                <button class="btn btn-export" data-bs-toggle="modal" data-bs-target="#addLoanModal" onclick="prefillAddForm('Personal')">
+                    <i class="fas fa-plus"></i> Add Product
+                </button>
+            }
         </div>
     </div>
 
-    <!-- Update Modal -->
-    <div class="modal fade" id="updateLoanModal" tabindex="-1" aria-labelledby="updateLoanModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="updateLoanModalLabel">
-                        <i class="fas fa-edit"></i> Update Loan Product
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body" id="updateModalBody">
-                    <!-- AJAX-loaded content -->
-                </div>
+    <div class="table-wrapper">
+        <table class="table table-bordered" id="personalProductTable">
+            <thead>
+                <tr>
+                    <th scope="col" class="col-product-name"><i class="fas fa-tag"></i><br>Product Name</th>
+                    <th scope="col" class="col-min-amount"><i class="fas fa-money-bill-wave"></i><br>Min Amount</th>
+                    <th scope="col" class="col-max-amount"><i class="fas fa-money-bill-wave"></i><br>Max Amount</th>
+                    <th scope="col" class="col-interest-rate"><i class="fas fa-percentage"></i><br>Interest Rate</th>
+                    <th scope="col" class="col-tenure"><i class="fas fa-calendar-alt"></i><br>Tenure</th>
+                    @if (role == "Admin")
+                    {
+                        <th scope="col" class="col-action"><i class="fas fa-cogs"></i><br>Action</th>
+                    }
+                </tr>
+            </thead>
+            <tbody class="product-table-body">
+                @foreach (var product in Model.Where(p => p.ProductType.ToLower() == "personal"))
+                {
+                    <tr class="product-row">
+                        <td class="text-center"><strong>@product.ProductName</strong></td>
+                        <td class="text-center"><span class="amount">₹@product.MinAmount.ToString("N0")</span></td>
+                        <td class="text-center"><span class="amount">₹@product.MaxAmount.ToString("N0")</span></td>
+                        <td class="text-center"><span class="rate">@product.InterestRate%</span></td>
+                        <td class="text-center"><span class="tenure">@product.Tenure months</span></td>
+                        @if (role == "Admin")
+                        {
+                            <td class="text-center">
+                                <div class="action-buttons">
+                                    <button class="btn-action btn-edit" data-bs-toggle="modal" data-bs-target="#updateLoanModal" onclick="loadUpdateForm(@product.LoanProductId)">
+                                        <i class="fas fa-edit"></i>
+                                        <span>Edit</span>
+                                    </button>
+                                    <a href="@Url.Action("Delete", new { id = product.LoanProductId })" class="btn-action btn-delete" onclick="return confirmDelete(@product.LoanProductId);">
+                                        <i class="fas fa-trash"></i>
+                                        <span>Delete</span>
+                                    </a>
+                                </div>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination Section -->
+    <div class="pagination-section">
+        <div class="pagination-info" id="personalPaginationInfo">
+            <!-- Pagination info will be generated by JavaScript -->
+        </div>
+        <nav aria-label="Personal product pagination">
+            <ul class="pagination" id="personalPaginationContainer">
+                <!-- Pagination buttons will be generated by JavaScript -->
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<!-- Home Loan Section -->
+<div id="home" class="product-section table-container" style="display:none;">
+    <div class="section-header">
+        <div class="section-info">
+            <span class="badge bg-success mb-2">Home Loan Products</span>
+            <h4 class="mb-2">
+                <i class="fas fa-home me-2"></i>
+                Home Loan Products
+            </h4>
+            <p class="text-muted">Manage home loan products and configurations.</p>
+        </div>
+        <div class="export-filter-controls">
+            @if (role == "Admin")
+            {
+                <button class="btn btn-export" data-bs-toggle="modal" data-bs-target="#addLoanModal" onclick="prefillAddForm('Home')">
+                    <i class="fas fa-plus"></i> Add Product
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="table table-bordered" id="homeProductTable">
+            <thead>
+                <tr>
+                    <th scope="col" class="col-product-name"><i class="fas fa-tag"></i><br>Product Name</th>
+                    <th scope="col" class="col-min-amount"><i class="fas fa-money-bill-wave"></i><br>Min Amount</th>
+                    <th scope="col" class="col-max-amount"><i class="fas fa-money-bill-wave"></i><br>Max Amount</th>
+                    <th scope="col" class="col-interest-rate"><i class="fas fa-percentage"></i><br>Interest Rate</th>
+                    <th scope="col" class="col-tenure"><i class="fas fa-calendar-alt"></i><br>Tenure</th>
+                    @if (role == "Admin")
+                    {
+                        <th scope="col" class="col-action"><i class="fas fa-cogs"></i><br>Action</th>
+                    }
+                </tr>
+            </thead>
+            <tbody class="product-table-body">
+                @foreach (var product in Model.Where(p => p.ProductType.ToLower() == "home"))
+                {
+                    <tr class="product-row">
+                        <td class="text-center"><strong>@product.ProductName</strong></td>
+                        <td class="text-center"><span class="amount">₹@product.MinAmount.ToString("N0")</span></td>
+                        <td class="text-center"><span class="amount">₹@product.MaxAmount.ToString("N0")</span></td>
+                        <td class="text-center"><span class="rate">@product.InterestRate%</span></td>
+                        <td class="text-center"><span class="tenure">@product.Tenure months</span></td>
+                        @if (role == "Admin")
+                        {
+                            <td class="text-center">
+                                <div class="action-buttons">
+                                    <button class="btn-action btn-edit" data-bs-toggle="modal" data-bs-target="#updateLoanModal" onclick="loadUpdateForm(@product.LoanProductId)">
+                                        <i class="fas fa-edit"></i>
+                                        <span>Edit</span>
+                                    </button>
+                                    <a href="@Url.Action("Delete", new { id = product.LoanProductId })" class="btn-action btn-delete" onclick="return confirmDelete(@product.LoanProductId);">
+                                        <i class="fas fa-trash"></i>
+                                        <span>Delete</span>
+                                    </a>
+                                </div>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination Section -->
+    <div class="pagination-section">
+        <div class="pagination-info" id="homePaginationInfo">
+            <!-- Pagination info will be generated by JavaScript -->
+        </div>
+        <nav aria-label="Home product pagination">
+            <ul class="pagination" id="homePaginationContainer">
+                <!-- Pagination buttons will be generated by JavaScript -->
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<!-- Vehicle Loan Section -->
+<div id="vehicle" class="product-section table-container" style="display:none;">
+    <div class="section-header">
+        <div class="section-info">
+            <span class="badge bg-warning mb-2">Vehicle Loan Products</span>
+            <h4 class="mb-2">
+                <i class="fas fa-car me-2"></i>
+                Vehicle Loan Products
+            </h4>
+            <p class="text-muted">Manage vehicle loan products and configurations.</p>
+        </div>
+        <div class="export-filter-controls">
+            @if (role == "Admin")
+            {
+                <button class="btn btn-export" data-bs-toggle="modal" data-bs-target="#addLoanModal" onclick="prefillAddForm('Vehicle')">
+                    <i class="fas fa-plus"></i> Add Product
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="table table-bordered" id="vehicleProductTable">
+            <thead>
+                <tr>
+                    <th scope="col" class="col-product-name"><i class="fas fa-tag"></i><br>Product Name</th>
+                    <th scope="col" class="col-min-amount"><i class="fas fa-money-bill-wave"></i><br>Min Amount</th>
+                    <th scope="col" class="col-max-amount"><i class="fas fa-money-bill-wave"></i><br>Max Amount</th>
+                    <th scope="col" class="col-interest-rate"><i class="fas fa-percentage"></i><br>Interest Rate</th>
+                    <th scope="col" class="col-tenure"><i class="fas fa-calendar-alt"></i><br>Tenure</th>
+                    @if (role == "Admin")
+                    {
+                        <th scope="col" class="col-action"><i class="fas fa-cogs"></i><br>Action</th>
+                    }
+                </tr>
+            </thead>
+            <tbody class="product-table-body">
+                @foreach (var product in Model.Where(p => p.ProductType.ToLower() == "vehicle"))
+                {
+                    <tr class="product-row">
+                        <td class="text-center"><strong>@product.ProductName</strong></td>
+                        <td class="text-center"><span class="amount">₹@product.MinAmount.ToString("N0")</span></td>
+                        <td class="text-center"><span class="amount">₹@product.MaxAmount.ToString("N0")</span></td>
+                        <td class="text-center"><span class="rate">@product.InterestRate%</span></td>
+                        <td class="text-center"><span class="tenure">@product.Tenure months</span></td>
+                        @if (role == "Admin")
+                        {
+                            <td class="text-center">
+                                <div class="action-buttons">
+                                    <button class="btn-action btn-edit" data-bs-toggle="modal" data-bs-target="#updateLoanModal" onclick="loadUpdateForm(@product.LoanProductId)">
+                                        <i class="fas fa-edit"></i>
+                                        <span>Edit</span>
+                                    </button>
+                                    <a href="@Url.Action("Delete", new { id = product.LoanProductId })" class="btn-action btn-delete" onclick="return confirmDelete(@product.LoanProductId);">
+                                        <i class="fas fa-trash"></i>
+                                        <span>Delete</span>
+                                    </a>
+                                </div>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination Section -->
+    <div class="pagination-section">
+        <div class="pagination-info" id="vehiclePaginationInfo">
+            <!-- Pagination info will be generated by JavaScript -->
+        </div>
+        <nav aria-label="Vehicle product pagination">
+            <ul class="pagination" id="vehiclePaginationContainer">
+                <!-- Pagination buttons will be generated by JavaScript -->
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addLoanModal" tabindex="-1" aria-labelledby="addLoanModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addLoanModalLabel">
+                    <i class="fas fa-plus"></i> Add Loan Product
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("AddLoanProduct", new LoanProduct())
             </div>
         </div>
     </div>
 </div>
 
-@section Scripts {
-    <script>
-        // Global variables for pagination and search
-        let currentPage = 1;
-        let rowsPerPage = 10; // Fixed rows per page like reports
-        let currentLoanType = 'personal';
-        let allRows = {};
-        let filteredRows = {};
+<!-- Update Modal -->
+<div class="modal fade" id="updateLoanModal" tabindex="-1" aria-labelledby="updateLoanModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateLoanModalLabel">
+                    <i class="fas fa-edit"></i> Update Loan Product
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="updateModalBody">
+                <!-- AJAX-loaded content -->
+            </div>
+        </div>
+    </div>
+</div>
 
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            // Restore the active loan type from localStorage
-            const savedLoanType = localStorage.getItem('activeLoanType') || 'personal';
+<script>
+    // Global variables
+    let currentProductType = 'personal';
 
-            initializeTables();
-            showLoan(savedLoanType);
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize pagination for all sections
+        setTimeout(initializePagination, 100);
+        // Load personal products by default
+        showProduct('personal');
+    });
+
+    function showProduct(type) {
+        // Update button states
+        document.querySelectorAll('.product-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`.btn-${type}-product`).classList.add('active');
+
+        // Hide all sections
+        document.querySelectorAll('.product-section').forEach(section => section.style.display = 'none');
+
+        // Show selected section
+        document.getElementById(type).style.display = 'block';
+
+        // Save current product type
+        currentProductType = type;
+
+        // Initialize pagination for current section
+        initializePaginationForSection(type);
+    }
+
+    // Global variables for pagination
+    let currentPage = 1;
+    let rowsPerPage = 10; // Fixed rows per page
+    let allRows = {};
+    let filteredRows = {};
+
+    function initializePagination() {
+        ['personal', 'home', 'vehicle'].forEach(type => {
+            allRows[type] = Array.from(document.querySelectorAll(`#${type} .product-row`));
+            filteredRows[type] = [...allRows[type]];
         });
+    }
 
-        function initializeTables() {
-            ['personal', 'home', 'vehicle'].forEach(type => {
-                allRows[type] = Array.from(document.querySelectorAll(`#${type} .loan-row`));
-                filteredRows[type] = [...allRows[type]];
-                updateTable(type);
+    function initializePaginationForSection(type) {
+        allRows[type] = Array.from(document.querySelectorAll(`#${type} .product-row`));
+        filteredRows[type] = [...allRows[type]];
+        updateTable(type);
+    }
+
+    function updateTable(type) {
+        // Hide all rows first
+        allRows[type].forEach(row => row.style.display = 'none');
+
+        // Calculate pagination
+        const totalRows = filteredRows[type].length;
+        const totalPages = Math.ceil(totalRows / rowsPerPage) || 1;
+        const startIndex = (currentPage - 1) * rowsPerPage;
+        const endIndex = Math.min(startIndex + rowsPerPage, totalRows);
+
+        // Show current page rows
+        for (let i = startIndex; i < endIndex; i++) {
+            if (filteredRows[type][i]) {
+                filteredRows[type][i].style.display = '';
+            }
+        }
+
+        // Update pagination controls
+        updatePagination(type, totalPages, totalRows, startIndex, endIndex);
+    }
+
+    function updatePagination(type, totalPages, totalRows, startIndex, endIndex) {
+        const paginationContainer = document.getElementById(`${type}PaginationContainer`);
+        const paginationInfo = document.getElementById(`${type}PaginationInfo`);
+
+        // Clear existing pagination
+        paginationContainer.innerHTML = '';
+
+        if (totalPages <= 1) {
+            const singleBtn = createPaginationButton('1', 1, false, true);
+            paginationContainer.appendChild(singleBtn);
+        } else {
+            // First page button
+            const firstBtn = createPaginationButton('«', 1, currentPage === 1);
+            paginationContainer.appendChild(firstBtn);
+
+            // Previous page button
+            const prevBtn = createPaginationButton('‹', currentPage - 1, currentPage === 1);
+            paginationContainer.appendChild(prevBtn);
+
+            // Page number buttons
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const pageBtn = createPaginationButton(i, i, false, i === currentPage);
+                paginationContainer.appendChild(pageBtn);
+            }
+
+            // Next page button
+            const nextBtn = createPaginationButton('›', currentPage + 1, currentPage === totalPages);
+            paginationContainer.appendChild(nextBtn);
+
+            // Last page button
+            const lastBtn = createPaginationButton('»', totalPages, currentPage === totalPages);
+            paginationContainer.appendChild(lastBtn);
+        }
+
+        // Update pagination info
+        if (totalRows > 0) {
+            paginationInfo.innerHTML = `
+                <i class="fas fa-info-circle"></i>
+                Showing ${startIndex + 1} to ${endIndex} of ${totalRows} entries
+            `;
+        } else {
+            paginationInfo.innerHTML = `
+                <i class="fas fa-info-circle"></i>
+                No matching records found
+            `;
+        }
+    }
+
+    function createPaginationButton(text, page, disabled, active = false) {
+        const li = document.createElement('li');
+        li.className = `page-item ${active ? 'active' : ''} ${disabled ? 'disabled' : ''}`;
+
+        const button = document.createElement('a');
+        button.className = 'page-link';
+        button.innerHTML = text;
+        button.href = '#';
+
+        if (!disabled) {
+            button.onclick = (e) => {
+                e.preventDefault();
+                goToPage(page);
+            };
+        }
+
+        li.appendChild(button);
+        return li;
+    }
+
+    function goToPage(page) {
+        currentPage = page;
+        updateTable(currentProductType);
+    }
+
+    function loadUpdateForm(id) {
+        fetch(`/LoanProduct/UpdateLoanProduct?id=${id}`)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById("updateModalBody").innerHTML = html;
             });
+    }
+
+    function prefillAddForm(type) {
+        setTimeout(() => {
+            const input = document.querySelector('#addLoanModal input[name="ProductType"]');
+            if (input) input.value = type;
+        }, 300);
+    }
+
+    function confirmDelete(id) {
+        if (confirm('Are you sure you want to delete this loan product?')) {
+            return true;
         }
-
-        function showLoan(type) {
-            // Hide all sections
-            document.querySelectorAll('.loan-section').forEach(sec => sec.style.display = 'none');
-
-            // Show selected section
-            document.getElementById(type).style.display = 'block';
-
-            // Update button states
-            document.querySelectorAll('.loan-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector(`.btn-${type}`).classList.add('active');
-
-            // Save the current loan type to localStorage
-            localStorage.setItem('activeLoanType', type);
-
-            currentLoanType = type;
-            updateTable(type);
-        }
-
-        function updateTable(type) {
-            // Hide all rows first
-            allRows[type].forEach(row => row.style.display = 'none');
-
-            // Calculate pagination
-            const totalRows = filteredRows[type].length;
-            const totalPages = Math.ceil(totalRows / rowsPerPage) || 1;
-            const startIndex = (currentPage - 1) * rowsPerPage;
-            const endIndex = Math.min(startIndex + rowsPerPage, totalRows);
-
-            // Show current page rows
-            for (let i = startIndex; i < endIndex; i++) {
-                if (filteredRows[type][i]) {
-                    filteredRows[type][i].style.display = '';
-                }
-            }
-
-            // Update pagination controls
-            updatePagination(type, totalPages, totalRows, startIndex, endIndex);
-        }
-
-        function updatePagination(type, totalPages, totalRows, startIndex, endIndex) {
-            const paginationContainer = document.getElementById(`${type}PaginationContainer`);
-            const paginationInfo = document.getElementById(`${type}PaginationInfo`);
-
-            // Clear existing pagination
-            paginationContainer.innerHTML = '';
-
-            if (totalPages <= 1) {
-                const singleBtn = createPaginationButton('1', 1, false, true);
-                paginationContainer.appendChild(singleBtn);
-            } else {
-                // First page button
-                const firstBtn = createPaginationButton('«', 1, currentPage === 1);
-                paginationContainer.appendChild(firstBtn);
-
-                // Previous page button
-                const prevBtn = createPaginationButton('‹', currentPage - 1, currentPage === 1);
-                paginationContainer.appendChild(prevBtn);
-
-                // Page number buttons
-                const maxVisiblePages = 5;
-                let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-                let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-
-                if (endPage - startPage + 1 < maxVisiblePages) {
-                    startPage = Math.max(1, endPage - maxVisiblePages + 1);
-                }
-
-                for (let i = startPage; i <= endPage; i++) {
-                    const pageBtn = createPaginationButton(i, i, false, i === currentPage);
-                    paginationContainer.appendChild(pageBtn);
-                }
-
-                // Next page button
-                const nextBtn = createPaginationButton('›', currentPage + 1, currentPage === totalPages);
-                paginationContainer.appendChild(nextBtn);
-
-                // Last page button
-                const lastBtn = createPaginationButton('»', totalPages, currentPage === totalPages);
-                paginationContainer.appendChild(lastBtn);
-            }
-
-            // Update pagination info
-            if (totalRows > 0) {
-                paginationInfo.innerHTML = `
-                    <i class="fas fa-info-circle"></i>
-                    Showing ${startIndex + 1} to ${endIndex} of ${totalRows} entries
-                `;
-            } else {
-                paginationInfo.innerHTML = `
-                    <i class="fas fa-info-circle"></i>
-                    No matching records found
-                `;
-            }
-        }
-
-        function createPaginationButton(text, page, disabled, active = false) {
-            const li = document.createElement('li');
-            li.className = `page-item ${active ? 'active' : ''} ${disabled ? 'disabled' : ''}`;
-
-            const button = document.createElement('a');
-            button.className = 'page-link';
-            button.innerHTML = text;
-            button.href = '#';
-
-            if (!disabled) {
-                button.onclick = (e) => {
-                    e.preventDefault();
-                    goToPage(page);
-                };
-            }
-
-            li.appendChild(button);
-            return li;
-        }
-
-        function goToPage(page) {
-            currentPage = page;
-            updateTable(currentLoanType);
-        }
-
-        function loadUpdateForm(id) {
-            fetch(`/LoanProduct/UpdateLoanProduct?id=${id}`)
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById("updateModalBody").innerHTML = html;
-                });
-        }
-
-        function prefillAddForm(type) {
-            setTimeout(() => {
-                const input = document.querySelector('#addLoanModal input[name="ProductType"]');
-                if (input) input.value = type;
-            }, 300);
-        }
-
-        function confirmDelete(id) {
-            if (confirm('Are you sure you want to delete this loan product?')) {
-                // Save the current state before deletion
-                localStorage.setItem('activeLoanType', currentLoanType);
-                return true;
-            }
-            return false;
-        }
-    </script>
-}
+        return false;
+    }
+</script>
