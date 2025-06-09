@@ -55,41 +55,17 @@
                     </h4>
                     <p class="text-muted">Manage your @type loan products below.</p>
                 </div>
-                @if (role == "Admin")
-                {
-                    <button class="btn btn-success add-loan-btn" data-bs-toggle="modal" data-bs-target="#addLoanModal" onclick="prefillAddForm('@type')">
-                        <i class="fas fa-plus me-1"></i> Create @type Loan
-                    </button>
-                }
-            </div>
-
-            <!-- Table Controls - Separated layout -->
-            <div class="table-controls">
-                <!-- Left side - Rows control -->
-                <div class="rows-control">
-                    <label for="rowsPerPage">
-                        <i class="fas fa-list-ol"></i>
-                        Rows per page:
-                    </label>
-                    <select id="rowsPerPage" class="form-select" onchange="changeRowsPerPage()">
-                        <option value="2" selected>2</option>
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                    </select>
-                </div>
-
-                <!-- Right side - Search -->
-                <div class="search-control">
-                    <div class="input-group search-input-group">
-                        <span class="input-group-text">
-                            <i class="fas fa-search"></i>
-                        </span>
-                        <input type="text" class="form-control" id="searchInput" placeholder="Search loan products..." oninput="searchProducts()">
-                    </div>
+                <div class="export-filter-controls">
+                    @if (role == "Admin")
+                    {
+                        <button class="btn btn-export add-loan-btn" data-bs-toggle="modal" data-bs-target="#addLoanModal" onclick="prefillAddForm('@type')">
+                            <i class="fas fa-plus me-1"></i> Create @type Loan
+                        </button>
+                    }
                 </div>
             </div>
 
-            <!-- Table - Compact design like repayment tables -->
+            <!-- Table - Compact design exactly like repayment tables -->
             <div class="table-wrapper">
                 <table class="table table-bordered" id="@(id)Table">
                     <thead>
@@ -188,7 +164,7 @@
     <script>
         // Global variables for pagination and search
         let currentPage = 1;
-        let rowsPerPage = 2; // Changed default to 2
+        let rowsPerPage = 10; // Fixed rows per page like reports
         let currentLoanType = 'personal';
         let allRows = {};
         let filteredRows = {};
@@ -225,23 +201,7 @@
             localStorage.setItem('activeLoanType', type);
 
             currentLoanType = type;
-            applyFilters(type);
             updateTable(type);
-        }
-
-        function applyFilters(type) {
-            let rows = [...allRows[type]];
-
-            // Apply search filter
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            if (searchTerm !== '') {
-                rows = rows.filter(row => {
-                    const text = row.textContent.toLowerCase();
-                    return text.includes(searchTerm);
-                });
-            }
-
-            filteredRows[type] = rows;
         }
 
         function updateTable(type) {
@@ -273,15 +233,15 @@
             paginationContainer.innerHTML = '';
 
             if (totalPages <= 1) {
-                const singleBtn = createBootstrapPaginationButton('1', 1, false, true);
+                const singleBtn = createPaginationButton('1', 1, false, true);
                 paginationContainer.appendChild(singleBtn);
             } else {
                 // First page button
-                const firstBtn = createBootstrapPaginationButton('«', 1, currentPage === 1);
+                const firstBtn = createPaginationButton('«', 1, currentPage === 1);
                 paginationContainer.appendChild(firstBtn);
 
                 // Previous page button
-                const prevBtn = createBootstrapPaginationButton('‹', currentPage - 1, currentPage === 1);
+                const prevBtn = createPaginationButton('‹', currentPage - 1, currentPage === 1);
                 paginationContainer.appendChild(prevBtn);
 
                 // Page number buttons
@@ -294,16 +254,16 @@
                 }
 
                 for (let i = startPage; i <= endPage; i++) {
-                    const pageBtn = createBootstrapPaginationButton(i, i, false, i === currentPage);
+                    const pageBtn = createPaginationButton(i, i, false, i === currentPage);
                     paginationContainer.appendChild(pageBtn);
                 }
 
                 // Next page button
-                const nextBtn = createBootstrapPaginationButton('›', currentPage + 1, currentPage === totalPages);
+                const nextBtn = createPaginationButton('›', currentPage + 1, currentPage === totalPages);
                 paginationContainer.appendChild(nextBtn);
 
                 // Last page button
-                const lastBtn = createBootstrapPaginationButton('»', totalPages, currentPage === totalPages);
+                const lastBtn = createPaginationButton('»', totalPages, currentPage === totalPages);
                 paginationContainer.appendChild(lastBtn);
             }
 
@@ -321,7 +281,7 @@
             }
         }
 
-        function createBootstrapPaginationButton(text, page, disabled, active = false) {
+        function createPaginationButton(text, page, disabled, active = false) {
             const li = document.createElement('li');
             li.className = `page-item ${active ? 'active' : ''} ${disabled ? 'disabled' : ''}`;
 
@@ -343,18 +303,6 @@
 
         function goToPage(page) {
             currentPage = page;
-            updateTable(currentLoanType);
-        }
-
-        function changeRowsPerPage() {
-            rowsPerPage = parseInt(document.getElementById('rowsPerPage').value);
-            currentPage = 1;
-            updateTable(currentLoanType);
-        }
-
-        function searchProducts() {
-            currentPage = 1;
-            applyFilters(currentLoanType);
             updateTable(currentLoanType);
         }
 
